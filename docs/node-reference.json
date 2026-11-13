@@ -1,0 +1,735 @@
+{
+  "name": "Planka",
+  "version": 1,
+  "description": "Interact with Planka Kanban Board API",
+  "resources": {
+    "project": {
+      "displayName": "Project",
+      "description": "Operations on projects",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new project",
+          "action": "Create a project"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a project",
+          "action": "Get a project"
+        },
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List all accessible projects",
+          "action": "List projects"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a project",
+          "action": "Update a project"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a project",
+          "action": "Delete a project"
+        },
+        {
+          "name": "Upload Background Image",
+          "value": "uploadBackgroundImage",
+          "description": "Upload a background image for a project",
+          "action": "Upload background image"
+        },
+        {
+          "name": "Delete Background Image",
+          "value": "deleteBackgroundImage",
+          "description": "Delete a background image",
+          "action": "Delete background image"
+        }
+      ]
+    },
+    "board": {
+      "displayName": "Board",
+      "description": "Operations on boards",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new board",
+          "action": "Create a board"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a board",
+          "action": "Get a board"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a board",
+          "action": "Update a board"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a board",
+          "action": "Delete a board"
+        }
+      ]
+    },
+    "list": {
+      "displayName": "List",
+      "description": "Operations on lists",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new list",
+          "action": "Create a list"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a list",
+          "action": "Get a list"
+        },
+        {
+          "name": "Get by Name",
+          "value": "getByName",
+          "description": "Get the one list on a board with this name (trimmed, case-insensitive by default); typed error when absent or ambiguous",
+          "action": "Get a list by name"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a list",
+          "action": "Update a list"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a list",
+          "action": "Delete a list"
+        },
+        {
+          "name": "Move Cards",
+          "value": "moveCards",
+          "description": "Move cards to this list",
+          "action": "Move cards to list"
+        },
+        {
+          "name": "Sort",
+          "value": "sort",
+          "description": "Sort cards in list",
+          "action": "Sort list"
+        },
+        {
+          "name": "Clear",
+          "value": "clear",
+          "description": "Clear all cards from list (trash lists only)",
+          "action": "Clear list"
+        }
+      ]
+    },
+    "card": {
+      "displayName": "Card",
+      "description": "Operations on cards",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new card",
+          "action": "Create a card"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a card",
+          "action": "Get a card"
+        },
+        {
+          "name": "Get Ancestor Chain",
+          "value": "getAncestorChain",
+          "description": "Walk Relations.parent_card upward and resolve the first ancestor Metadata.project_id; every refusal is a named stop",
+          "action": "Get a card ancestor chain"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a card",
+          "action": "Update a card"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a card",
+          "action": "Delete a card"
+        },
+        {
+          "name": "Duplicate",
+          "value": "duplicate",
+          "description": "Duplicate a card",
+          "action": "Duplicate a card"
+        },
+        {
+          "name": "Read Notifications",
+          "value": "readNotifications",
+          "description": "Mark card notifications as read",
+          "action": "Mark notifications as read"
+        },
+        {
+          "name": "List In List",
+          "value": "listInList",
+          "description": "List cards in a specific list with filtering",
+          "action": "List cards in list"
+        }
+      ]
+    },
+    "user": {
+      "displayName": "User",
+      "description": "Operations on users",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new user",
+          "action": "Create a user"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a user",
+          "action": "Get a user"
+        },
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List all users",
+          "action": "List users"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a user",
+          "action": "Update a user"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a user",
+          "action": "Delete a user"
+        },
+        {
+          "name": "Update Avatar",
+          "value": "updateAvatar",
+          "description": "Update user avatar",
+          "action": "Update user avatar"
+        },
+        {
+          "name": "Update Email",
+          "value": "updateEmail",
+          "description": "Update user email",
+          "action": "Update user email"
+        },
+        {
+          "name": "Update Password",
+          "value": "updatePassword",
+          "description": "Update user password",
+          "action": "Update user password"
+        },
+        {
+          "name": "Update Username",
+          "value": "updateUsername",
+          "description": "Update user username",
+          "action": "Update user username"
+        },
+        {
+          "name": "Create API Key",
+          "value": "createApiKey",
+          "description": "Generate API key for a user (returned once only)",
+          "action": "Create API key"
+        }
+      ]
+    },
+    "task": {
+      "displayName": "Task",
+      "description": "Operations on tasks",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new task",
+          "action": "Create a task"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a task",
+          "action": "Update a task"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a task",
+          "action": "Delete a task"
+        },
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List tasks in a task list",
+          "action": "List tasks"
+        }
+      ]
+    },
+    "taskList": {
+      "displayName": "Task List",
+      "description": "Operations on task lists",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new task list",
+          "action": "Create a task list"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a task list",
+          "action": "Get a task list"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a task list",
+          "action": "Update a task list"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a task list",
+          "action": "Delete a task list"
+        }
+      ]
+    },
+    "comment": {
+      "displayName": "Comment",
+      "description": "Operations on comments",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new comment",
+          "action": "Create a comment"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a comment",
+          "action": "Update a comment"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a comment",
+          "action": "Delete a comment"
+        },
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List comments on a card",
+          "action": "List comments"
+        }
+      ]
+    },
+    "attachment": {
+      "displayName": "Attachment",
+      "description": "Operations on attachments",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Upload an attachment",
+          "action": "Create an attachment"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update an attachment name",
+          "action": "Update an attachment"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete an attachment",
+          "action": "Delete an attachment"
+        }
+      ]
+    },
+    "label": {
+      "displayName": "Label",
+      "description": "Operations on labels",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new label",
+          "action": "Create a label"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a label",
+          "action": "Update a label"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a label",
+          "action": "Delete a label"
+        },
+        {
+          "name": "Add To Card",
+          "value": "addToCard",
+          "description": "Add label to card",
+          "action": "Add label to card"
+        },
+        {
+          "name": "Remove From Card",
+          "value": "removeFromCard",
+          "description": "Remove label from card",
+          "action": "Remove label from card"
+        }
+      ]
+    },
+    "webhook": {
+      "displayName": "Webhook",
+      "description": "Operations on webhooks",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a new webhook",
+          "action": "Create a webhook"
+        },
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List webhooks",
+          "action": "List webhooks"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a webhook",
+          "action": "Update a webhook"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a webhook",
+          "action": "Delete a webhook"
+        }
+      ]
+    },
+    "membership": {
+      "displayName": "Membership",
+      "description": "Operations on memberships (card and board)",
+      "operations": [
+        {
+          "name": "Add User To Card",
+          "value": "addUserToCard",
+          "description": "Add user to card",
+          "action": "Add user to card"
+        },
+        {
+          "name": "Remove User From Card",
+          "value": "removeUserFromCard",
+          "description": "Remove user from card",
+          "action": "Remove user from card"
+        },
+        {
+          "name": "Add User To Board",
+          "value": "addUserToBoard",
+          "description": "Add user to board",
+          "action": "Add user to board"
+        },
+        {
+          "name": "Update Board Membership",
+          "value": "updateBoardMembership",
+          "description": "Update board membership role",
+          "action": "Update board membership"
+        },
+        {
+          "name": "Remove User From Board",
+          "value": "removeUserFromBoard",
+          "description": "Remove user from board",
+          "action": "Remove user from board"
+        }
+      ]
+    },
+    "config": {
+      "displayName": "Config",
+      "description": "Operations on application configuration",
+      "operations": [
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get application configuration",
+          "action": "Get application configuration"
+        },
+        {
+          "name": "Get Bootstrap",
+          "value": "getBootstrap",
+          "description": "Get application bootstrap data",
+          "action": "Get bootstrap"
+        },
+        {
+          "name": "Test SMTP",
+          "value": "testSmtp",
+          "description": "Test SMTP configuration by sending test email (Admin only)",
+          "action": "Test SMTP"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update application configuration (Admin only)",
+          "action": "Update configuration"
+        }
+      ]
+    },
+    "terms": {
+      "displayName": "Terms",
+      "description": "Operations on terms and conditions",
+      "operations": [
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get terms and conditions",
+          "action": "Get terms and conditions"
+        }
+      ]
+    },
+    "notification": {
+      "displayName": "Notification",
+      "description": "Operations on notifications",
+      "operations": [
+        {
+          "name": "List",
+          "value": "list",
+          "description": "List all unread notifications for the current user",
+          "action": "List notifications"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a specific notification",
+          "action": "Get a notification"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a notification (mark as read/unread)",
+          "action": "Update a notification"
+        },
+        {
+          "name": "Mark All Read",
+          "value": "markAllRead",
+          "description": "Mark all notifications as read",
+          "action": "Mark all notifications as read"
+        }
+      ]
+    },
+    "notificationService": {
+      "displayName": "Notification Service",
+      "description": "Operations on notification services",
+      "operations": [
+        {
+          "name": "Create Board Service",
+          "value": "createBoard",
+          "description": "Create a notification service for a board",
+          "action": "Create board notification service"
+        },
+        {
+          "name": "Create User Service",
+          "value": "createUser",
+          "description": "Create a notification service for a user",
+          "action": "Create user notification service"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a notification service",
+          "action": "Update notification service"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a notification service",
+          "action": "Delete notification service"
+        },
+        {
+          "name": "Test",
+          "value": "test",
+          "description": "Test a notification service",
+          "action": "Test notification service"
+        }
+      ]
+    },
+    "customFieldGroup": {
+      "displayName": "Custom Field Group",
+      "description": "Operations on custom field groups",
+      "operations": [
+        {
+          "name": "Create Board Group",
+          "value": "createBoardGroup",
+          "description": "Create a custom field group within a board",
+          "action": "Create a board custom field group"
+        },
+        {
+          "name": "Create Card Group",
+          "value": "createCardGroup",
+          "description": "Create a custom field group for a card",
+          "action": "Create a card custom field group"
+        },
+        {
+          "name": "Get",
+          "value": "get",
+          "description": "Get a custom field group",
+          "action": "Get a custom field group"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a custom field group",
+          "action": "Update a custom field group"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a custom field group",
+          "action": "Delete a custom field group"
+        }
+      ]
+    },
+    "customField": {
+      "displayName": "Custom Field",
+      "description": "Operations on custom fields",
+      "operations": [
+        {
+          "name": "Create In Base Group",
+          "value": "createInBaseGroup",
+          "description": "Create a custom field in a base custom field group",
+          "action": "Create a custom field in base group"
+        },
+        {
+          "name": "Create In Group",
+          "value": "createInGroup",
+          "description": "Create a custom field in a custom field group",
+          "action": "Create a custom field in group"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a custom field",
+          "action": "Update a custom field"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a custom field",
+          "action": "Delete a custom field"
+        },
+        {
+          "name": "List In Base Group",
+          "value": "listInBaseGroup",
+          "description": "List custom fields in a base custom field group",
+          "action": "List custom fields in base group"
+        }
+      ]
+    },
+    "customFieldValue": {
+      "displayName": "Custom Field Value",
+      "description": "Operations on custom field values",
+      "operations": [
+        {
+          "name": "Set Value",
+          "value": "set",
+          "description": "Set or update a custom field value for a card",
+          "action": "Set custom field value"
+        },
+        {
+          "name": "Delete Value",
+          "value": "delete",
+          "description": "Delete a custom field value from a card",
+          "action": "Delete custom field value"
+        }
+      ]
+    },
+    "baseCustomFieldGroup": {
+      "displayName": "Base Custom Field Group",
+      "description": "Operations on base custom field groups (templates)",
+      "operations": [
+        {
+          "name": "Create",
+          "value": "create",
+          "description": "Create a base custom field group",
+          "action": "Create base custom field group"
+        },
+        {
+          "name": "Update",
+          "value": "update",
+          "description": "Update a base custom field group",
+          "action": "Update base custom field group"
+        },
+        {
+          "name": "Delete",
+          "value": "delete",
+          "description": "Delete a base custom field group",
+          "action": "Delete base custom field group"
+        }
+      ]
+    },
+    "action": {
+      "displayName": "Action",
+      "description": "Operations on actions (activity history)",
+      "operations": [
+        {
+          "name": "Get Board Actions",
+          "value": "getBoardActions",
+          "description": "Get activity history for a board",
+          "action": "Get board actions"
+        },
+        {
+          "name": "Get Card Actions",
+          "value": "getCardActions",
+          "description": "Get activity history for a card",
+          "action": "Get card actions"
+        }
+      ]
+    },
+    "projectManager": {
+      "displayName": "Project Manager",
+      "description": "Operations on project managers",
+      "operations": [
+        {
+          "name": "Add",
+          "value": "add",
+          "description": "Add a project manager to a project",
+          "action": "Add project manager"
+        },
+        {
+          "name": "Remove",
+          "value": "remove",
+          "description": "Remove a project manager from a project",
+          "action": "Remove project manager"
+        }
+      ]
+    }
+  },
+  "totalResources": 22,
+  "totalOperations": 99
+}

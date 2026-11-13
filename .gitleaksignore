@@ -1,0 +1,9 @@
+# gitleaks allowlist for `gitleaks dir`.
+#
+# Both entries are upstream Planka OpenAPI examples, not credentials: a documentation
+# placeholder cookie carrying a random UUID. The file is generated from Planka's published
+# spec, so the example is left byte-identical to upstream rather than edited.
+#
+# Dir-mode fingerprints are `path:rule:line`; the line numbers must move with the file.
+docs/openapi.json:generic-api-key:2325
+docs/openapi.json:generic-api-key:2505
