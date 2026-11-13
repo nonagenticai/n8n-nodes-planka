@@ -598,7 +598,7 @@ When reporting issues, include:
 # Check versions
 n8n --version
 node --version
-npm list @nonagentic/n8n-nodes-planka
+npm list @nonagenticai/n8n-nodes-planka
 ```
 
 ---

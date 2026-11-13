@@ -80,7 +80,7 @@ function auth(): RetryingRequest {
 	(a as any).RETRY_DELAYS = [5, 5, 5]; // speed only; the attempt cap is unchanged
 	return a;
 }
-const ctx = { getNode: () => ({ name: 'Planka', type: '@nonagentic/n8n-nodes-planka.planka' }) } as any;
+const ctx = { getNode: () => ({ name: 'Planka', type: '@nonagenticai/n8n-nodes-planka.planka' }) } as any;
 
 let seq = 0;
 function freshPath(label: string): string {

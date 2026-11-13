@@ -1,6 +1,6 @@
 # n8n-nodes-planka
 
-[![npm version](https://img.shields.io/npm/v/@nonagentic/n8n-nodes-planka.svg)](https://www.npmjs.com/package/@nonagentic/n8n-nodes-planka)
+[![npm version](https://img.shields.io/npm/v/@nonagenticai/n8n-nodes-planka.svg)](https://www.npmjs.com/package/@nonagenticai/n8n-nodes-planka)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![CI](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml/badge.svg)](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/nonagenticai/n8n-nodes-planka)](https://github.com/nonagenticai/n8n-nodes-planka/releases)
@@ -22,13 +22,13 @@ This is an n8n community node for integrating with [Planka](https://planka.app),
 ### n8n GUI (recommended)
 
 1. Go to **Settings → Community Nodes → Install**
-2. Enter `@nonagentic/n8n-nodes-planka`
+2. Enter `@nonagenticai/n8n-nodes-planka`
 3. Restart n8n
 
 ### npm
 
 ```bash
-npm install @nonagentic/n8n-nodes-planka
+npm install @nonagenticai/n8n-nodes-planka
 ```
 
 ## Configuration
@@ -143,7 +143,7 @@ npm install @nonagentic/n8n-nodes-planka
 
 ### Project Structure
 ```
-n8n-nodes-planka/ (package: @nonagentic/n8n-nodes-planka)
+n8n-nodes-planka/ (package: @nonagenticai/n8n-nodes-planka)
 ├── nodes/Planka/
 │   ├── Planka.node.ts              # Main node
 │   ├── operations/                 # Operation modules
