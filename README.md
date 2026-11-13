@@ -2,6 +2,8 @@
 
 [![npm version](https://img.shields.io/npm/v/@nonagentic/n8n-nodes-planka.svg)](https://www.npmjs.com/package/@nonagentic/n8n-nodes-planka)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml/badge.svg)](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/nonagenticai/n8n-nodes-planka)](https://github.com/nonagenticai/n8n-nodes-planka/releases)
 
 This is an n8n community node for integrating with [Planka](https://planka.app), the open-source kanban board.
 
@@ -266,6 +268,16 @@ Contributions welcome! Please follow these guidelines:
 3. Add tests for new functionality
 4. Ensure all tests pass
 5. Submit a pull request
+
+## Security
+
+Report vulnerabilities privately through the repository's Security tab — see
+[`SECURITY.md`](SECURITY.md). Do not open a public issue for a security problem.
+
+## Contributing
+
+Issues and pull requests are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
+development commands and the commit conventions. Commits carry DCO sign-off.
 
 ## License
 
