@@ -1,6 +1,6 @@
 {
   "name": "@nonagenticai/n8n-nodes-planka",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "n8n community node for Planka, the open-source kanban board",
   "license": "Apache-2.0",
   "publishConfig": {
