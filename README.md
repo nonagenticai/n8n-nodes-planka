@@ -5,17 +5,32 @@
 [![CI](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml/badge.svg)](https://github.com/nonagenticai/n8n-nodes-planka/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/nonagenticai/n8n-nodes-planka)](https://github.com/nonagenticai/n8n-nodes-planka/releases)
 
-This is an n8n community node for integrating with [Planka](https://planka.app), the open-source kanban board.
+An n8n community node for [Planka](https://planka.app), the open-source kanban board. It gives
+n8n workflows typed access to Planka projects, boards, lists, cards and their supporting objects,
+without hand-written HTTP Request nodes.
+
+| | |
+|---|---|
+| **Runtime** | TypeScript / Node.js, packaged as an n8n community node |
+| **Depends on** | An n8n instance and a reachable Planka instance (the bundled API spec is Planka 2.0.0) |
+| **Runs on** | Inside n8n, installed from the GUI or npm |
 
 ## Features
 
-- **23 Resources**: Project, Board, List, Card, User, Task, Task List, Comment, Label, Attachment, Webhook, Membership, Config, Terms, Notification, Notification Service, Custom Field Group, Custom Field, Custom Field Value, Base Custom Field Group, Action, Project Manager, Manifest
-- **94 Operations** across those resources
-- **API Coverage**: 47% (45/96 endpoints) — sufficient for common workflows
-- **Authentication**: Planka username/email + password; the session token is obtained and cached automatically
-- **Error Handling**: upstream detail is preserved and credentials are redacted from messages
-- **File Upload Support**: Attach files to cards and users
-- **Terms Acceptance**: Automatic handling of Planka's terms acceptance flow
+- **22 resources**: Project, Board, List, Card, User, Task, Task List, Comment, Attachment, Label,
+  Webhook, Membership, Config, Terms, Notification, Notification Service, Custom Field Group,
+  Custom Field, Custom Field Value, Base Custom Field Group, Action, Project Manager.
+  `Manifest` is not a node resource.
+- **99 operations** across those resources (the full list is in
+  [`docs/node-reference.md`](docs/node-reference.md)).
+- **API coverage**: the node's requests cover 95 of the 100 operations in the bundled Planka 2.0.0
+  OpenAPI spec ([`docs/openapi.json`](docs/openapi.json)); the credential flow adds two more, so 97
+  of the 100 are reachable. See [API coverage](#api-coverage).
+- **Authentication**: Planka email/username and password; the session token is obtained and cached
+  automatically.
+- **Error handling**: upstream detail is preserved and credentials are redacted from messages.
+- **File uploads**: attachments on cards and avatars for users.
+- **Terms acceptance**: Planka's terms acceptance flow is handled automatically during login.
 
 ## Installation
 
@@ -31,68 +46,42 @@ This is an n8n community node for integrating with [Planka](https://planka.app),
 npm install @nonagenticai/n8n-nodes-planka
 ```
 
+The current npm release is **0.1.5**. Release history is in [`CHANGELOG.md`](CHANGELOG.md).
+
 ## Configuration
 
-### Credentials Setup
+Create a **Planka Kanban API** credential (**Credentials → New → Planka Kanban API**):
 
-1. Open n8n and go to **Credentials → New**
-2. Select **Planka Kanban API**
-3. Configure:
-   - **Planka Base URL**: your instance URL (e.g. `https://planka.example.com`)
-   - **Email or Username**: your Planka login
-   - **Password**: your Planka password
-   - **SSL Certificate Options → Ignore SSL Issues**: only for development against a self-signed certificate
-4. Save, then use **Test** to verify the credential.
+| Field | Default | Meaning |
+|---|---|---|
+| **Planka Base URL** | — (required) | Base URL of your Planka instance, e.g. `https://planka.example.com` |
+| **Email or Username** | — (required) | Your Planka login |
+| **Password** | — (required) | Your Planka password |
+| **SSL Certificate Options → Ignore SSL Issues** | `false` | Ignore SSL certificate errors; development only, for self-signed certificates |
+
+Use **Test** to verify the credential against your instance.
 
 ## Usage
 
 ### Resources
 
-#### 1. Project Operations
-- Create, Get, List, Update, Delete projects
+The node exposes 22 resources. Operations common to most resources are Create, Get, Update and
+Delete; the complete per-resource list, with each operation's value and description, is in
+[`docs/node-reference.md`](docs/node-reference.md). Highlights:
 
-#### 2. Board Operations
-- Create, Get, Update, Delete boards within projects
-
-#### 3. List Operations
-- Create, Get, Update, Delete lists (columns) in boards
-- Move cards between lists
-- Sort cards in lists
-
-#### 4. Card Operations
-- Create, Get, List, Update, Delete cards
-- Duplicate cards
-- Move cards between lists
-
-#### 5. User Operations
-- Create, Get, List, Update, Delete users
-
-#### 6. Task Operations
-- Create, Update, Delete tasks (checklist items) in cards
-
-#### 7. Comment Operations
-- Create, Update, Delete comments on cards
-
-#### 8. Label Operations
-- Create, Update, Delete labels
-- Add/Remove labels from cards
-
-#### 9. Attachment Operations
-- Upload attachments to cards
-- Update attachment names
-- Delete attachments
-
-#### 10. Webhook Operations
-- Create, Get, List, Update, Delete webhooks for projects
-
-#### 11. Membership Operations
-- Add/Remove users to/from cards
-- Add/Remove users to/from boards
-- Update board membership roles (editor/viewer)
-
-## Example Workflows
+- **Project**: create, get, list, update, delete, upload/delete background image
+- **Board**: create, get, update, delete
+- **List**: create, get, get by name, update, delete, move cards, sort, clear
+- **Card**: create, get, get ancestor chain, update, delete, duplicate, read notifications, list in list
+- **User**: create, get, list, update, delete, update avatar/email/password/username, create API key
+- **Task, Task List, Comment, Label, Attachment**: create, update, delete and the resource-specific
+  list/add/remove operations
+- **Membership**: add/remove users on cards and boards, update board membership roles
+- **Config, Terms, Notification, Notification Service, Action, Project Manager, and the custom-field
+  resources**: the operations listed in the reference
 
 ### Create Project → Board → List → Card
+
 ```
 1. Planka Node (Project - Create)
    → Name: "My Project"
@@ -114,7 +103,8 @@ npm install @nonagenticai/n8n-nodes-planka
    → Description: "Complete feature X"
 ```
 
-### Bulk Create Cards from Spreadsheet
+### Bulk create cards from a spreadsheet
+
 ```
 1. Spreadsheet File Node (Read)
 2. Code Node (Transform data)
@@ -124,112 +114,65 @@ npm install @nonagenticai/n8n-nodes-planka
    → Description: {{ $json.description }}
 ```
 
-## Recent Updates
+## API coverage
 
-### Version 1.0.1 (November 2025)
+The node implements **99 operations across 22 resources**. Its requests use **95 of the 100
+operations** defined by the bundled Planka 2.0.0 OpenAPI spec (70 paths). The credential flow calls
+`POST /api/access-tokens` and `POST /api/access-tokens/accept-terms` automatically, so **97 of the
+100** spec operations are reachable from a workflow.
 
-- **Fixed Credentials**: Removed hardcoded development URLs from credentials configuration
-- **Updated User Operations**: User role field now correctly accepts `admin` or `user` values (fixed from invalid role formats)
-- **Fixed List Operations**:
-  - Corrected `moveCards` operation for proper card movement between lists
-  - Fixed list type field to accept `normal` or `template` values
-  - Improved `sort` operation type field handling
-- **Expanded Coverage**: 22 resources with 93 total operations
-- **Test Coverage**: Achieved 79.11% statement coverage, 86.3% function coverage
-- **Documentation**: Comprehensive API coverage documentation (47% of Planka API endpoints - 45/96)
-- **Production Ready**: Full validation and integration testing complete
+The three spec operations the node does not implement are all access-token administration:
 
-## Development
+- `DELETE /access-tokens/me`
+- `POST /access-tokens/exchange-with-oidc`
+- `POST /access-tokens/revoke-pending-token`
 
-### Project Structure
-```
-n8n-nodes-planka/ (package: @nonagenticai/n8n-nodes-planka)
-├── nodes/Planka/
-│   ├── Planka.node.ts              # Main node
-│   ├── operations/                 # Operation modules
-│   ├── descriptions/               # Property descriptions
-│   └── helpers/                    # HTTP request helpers
-├── credentials/
-│   └── PlankaApi.credentials.ts    # Credentials
-├── docs/                            # Auto-generated docs
-├── tests/                           # Unit and integration tests
-└── package.json
-```
+Some node operations are convenience operations built from spec endpoints (for example
+**List → Get by Name** and **Card → Get Ancestor Chain**), and two endpoints the node uses are not
+in the 2.0.0 spec: `GET /api/task-lists/{id}/tasks` and
+`GET /api/base-custom-field-groups/{id}/custom-fields`.
 
-### Build
-```bash
-npm run build        # Build node
-npm run dev          # Watch mode
-npm run lint         # Lint code
-npm run test         # Run tests (when implemented)
-npm run test:coverage # Coverage report
-```
+### Operations by resource
 
-## API Coverage
-
-This node implements **93 operations** across **22 resources**, providing access to **45 of 96 available Planka API endpoints (47% coverage)**. This level of coverage supports all common Kanban workflow use cases.
-
-### Implementation Status by Resource
-
-| Resource | Operations | Implementation |
-|----------|-----------|---------|
-| Project | 7 | Create, Get, List, Update, Delete, Upload/Delete Background |
+| Resource | Operations | Operation names |
+|---|---:|---|
+| Project | 7 | Create, Get, List, Update, Delete, Upload Background Image, Delete Background Image |
 | Board | 4 | Create, Get, Update, Delete |
-| List | 7 | Create, Get, Update, Delete, Move Cards, Sort, Clear |
-| Card | 8 | Create, Get, List, Update, Delete, Duplicate, Read Notifications, List In List |
-| User | 9 | Create, Get, List, Update, Delete, Update Avatar/Email/Password/Username |
-| Task | 3 | Create, Update, Delete |
+| List | 8 | Create, Get, Get by Name, Update, Delete, Move Cards, Sort, Clear |
+| Card | 8 | Create, Get, Get Ancestor Chain, Update, Delete, Duplicate, Read Notifications, List In List |
+| User | 10 | Create, Get, List, Update, Delete, Update Avatar, Update Email, Update Password, Update Username, Create API Key |
+| Task | 4 | Create, Update, Delete, List |
 | Task List | 4 | Create, Get, Update, Delete |
 | Comment | 4 | Create, Update, Delete, List |
-| Label | 5 | Create, Update, Delete, Add/Remove from Card |
 | Attachment | 3 | Create, Update, Delete |
-| Webhook | 5 | Create, Get, List, Update, Delete |
-| Membership | 5 | Add/Remove User to Card/Board, Update Board Membership |
-| Custom Field Group | 5 | Create Board/Card Group, Get, Update, Delete |
-| Custom Field | 4 | Create In Base/Board Group, Update, Delete |
-| Custom Field Value | 2 | Set, Delete |
-| Notification | 4 | List, Get, Update, Mark All Read |
-| Notification Service | 5 | Create Board/User Service, Update, Delete, Test |
-| Config | 1 | Get |
+| Label | 5 | Create, Update, Delete, Add To Card, Remove From Card |
+| Webhook | 4 | Create, List, Update, Delete |
+| Membership | 5 | Add User to Card, Remove User from Card, Add User to Board, Remove User from Board, Update Board Membership |
+| Config | 4 | Get, Get Bootstrap, Update, Test SMTP |
 | Terms | 1 | Get |
+| Notification | 4 | List, Get, Update, Mark All Read |
+| Notification Service | 5 | Create Board Service, Create User Service, Update, Delete, Test |
+| Custom Field Group | 5 | Create Board Group, Create Card Group, Get, Update, Delete |
+| Custom Field | 5 | Create in Base Group, Create in Group, Update, Delete, List in Base Group |
+| Custom Field Value | 2 | Set Value, Delete Value |
 | Base Custom Field Group | 3 | Create, Update, Delete |
-| Action | 2 | Get Board/Card Actions |
+| Action | 2 | Get Board Actions, Get Card Actions |
 | Project Manager | 2 | Add, Remove |
-| **TOTAL** | **93** | **45/96 API endpoints (47%)** |
+| **TOTAL** | **99** | |
 
-### What's Implemented
+## Network configuration
 
-The implemented endpoints cover all critical Kanban operations:
-- **Board Management**: Create/update projects, boards, lists, and cards
-- **Card Operations**: Full CRUD, duplication, and workflow management
-- **User Management**: User administration with role support
-- **Collaboration**: Comments, attachments, labels, and task checklists
-- **Customization**: Custom fields and field groups for extended metadata
-- **Notifications**: Event notifications and notification service management
-- **Webhooks**: Event-driven automation with webhook support
+### Docker considerations
 
-### What's Not Implemented
+- Use a hostname (`planka.example.com`) rather than `localhost`, so the n8n container can resolve
+  the Planka instance.
+- Make sure n8n can resolve any internal or `.local` domains you use.
+- Handle self-signed certificates through the credential's **Ignore SSL Issues** option.
 
-The following endpoints from the Planka API are not yet implemented:
-- Some advanced/rarely-used API endpoints (51 endpoints)
-- Specific board template operations
-- Advanced analytics and reporting endpoints
+### Test connectivity
 
-**Note**: The 47% coverage is intentional and sufficient - it prioritizes the most commonly-used operations for typical Kanban workflows. Additional endpoints can be added based on community requests.
-
-## Network Configuration
-
-### Docker Considerations
-- Use hostnames (`planka.example.com`) instead of `localhost`
-- Ensure n8n containers can resolve `.local` domains
-- For HTTPS services, handle self-signed certificates appropriately
-
-### Test Connectivity
 ```bash
-# From n8n container
-docker exec n8n-n8n-1 curl http://planka.example.com:3333/health
-
-# From host
+# From the host: obtain a session token directly from Planka
 curl http://planka.example.com:3333/api/access-tokens -X POST \
   -H "Content-Type: application/json" \
   -d '{"emailOrUsername":"test","password":"test"}'
@@ -238,36 +181,60 @@ curl http://planka.example.com:3333/api/access-tokens -X POST \
 ## Troubleshooting
 
 ### Node doesn't appear in n8n
+
 ```bash
-# Check build output
 npm run build
-
-# Verify dist/ folder
 ls -la dist/
-
-# Check n8n logs
 n8n start --log-level=debug
 ```
 
 ### Authentication fails
-- Verify Planka instance URL
-- Check credentials (email/username and password)
-- Ensure terms have been accepted
-- Test API connectivity directly
 
-### API Connection Timeout
-- Use proper hostname (not localhost in Docker)
-- Check network connectivity
-- Verify Planka service is running
+- Verify the Planka base URL.
+- Check the email/username and password.
+- Make sure the Planka user can reach the instance's API.
+- Test the API directly with the `curl` command above.
 
-## Contributing
+### API connection timeout
 
-Contributions welcome! Please follow these guidelines:
-1. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+- Use a hostname, not `localhost`, when n8n runs in Docker.
+- Check network connectivity from the n8n container to Planka.
+- Verify the Planka service is running.
+
+## Development
+
+### Project structure
+
+```
+n8n-nodes-planka/ (package: @nonagenticai/n8n-nodes-planka)
+├── nodes/Planka/
+│   ├── Planka.node.ts              # Main node
+│   ├── operations/                 # Operation modules
+│   ├── descriptions/               # Property descriptions
+│   └── helpers/                    # Node-specific helpers
+├── credentials/
+│   └── PlankaApi.credentials.ts    # Credentials
+├── helpers/                         # Shared request and error helpers
+├── docs/                            # Generated API reference
+├── tests/                           # Unit tests
+└── package.json
+```
+
+### Build and test
+
+```bash
+npm ci --registry=https://registry.npmjs.org/
+npm run build          # Compile TypeScript and copy icons
+npm run dev            # Watch mode
+npm run lint           # ESLint
+npm test               # Unit tests (integration tests excluded)
+npm run test:coverage  # Unit tests with coverage
+npm run docs           # Regenerate docs/node-reference.{json,md}
+```
+
+The test suite lives in `tests/unit/`. `docs/node-reference.json` and
+`docs/node-reference.md` are generated from the node definition by `npm run docs`; do not edit
+them by hand.
 
 ## Security
 
@@ -276,8 +243,9 @@ Report vulnerabilities privately through the repository's Security tab — see
 
 ## Contributing
 
-Issues and pull requests are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
-development commands and the commit conventions. Commits carry DCO sign-off.
+Issues and pull requests are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the development
+setup, test and lint commands, branch and commit conventions, and the pull-request process.
+Commits carry DCO sign-off (`git commit -s`).
 
 ## Licensing
 
@@ -298,9 +266,3 @@ Apache-2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).
 ## Acknowledgments
 
 - Planka project: https://planka.app
-
----
-
-**Version**: 1.0.0
-**Date**: January 2025
-**Status**: Production Ready
