@@ -1,8 +1,13 @@
 /**
  * Custom Jest Environment for Kanban Module
  *
- * - Disables TLS certificate verification for integration tests against self-signed certs
  * - Provides localStorage/sessionStorage polyfills required by n8n-workflow
+ *
+ * TLS verification is deliberately NOT disabled here. This suite makes no TLS
+ * connections at all: every test mocks `helpers.request`, the one raw-socket
+ * test dials `http://127.0.0.1` (plain HTTP), and there is no integration
+ * directory. A process-wide NODE_TLS_REJECT_UNAUTHORIZED=0 would have weakened
+ * every HTTPS call a dependency might make while protecting nothing.
  */
 
 const NodeEnvironment = require('jest-environment-node').TestEnvironment;
@@ -10,9 +15,6 @@ const NodeEnvironment = require('jest-environment-node').TestEnvironment;
 class CustomEnvironment extends NodeEnvironment {
   constructor(config, context) {
     super(config, context);
-
-    // Disable TLS cert verification for self-signed certs (planka.example.com)
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     // Add localStorage polyfill before any tests run
     this.global.localStorage = {
